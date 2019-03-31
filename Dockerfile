@@ -1,4 +1,4 @@
-FROM python:3.5.1
+FROM python:3.5.7
 ENV PYTHONUNBUFFERED 1
 RUN apt-get update && apt-get install -y \
     libopenblas-dev \

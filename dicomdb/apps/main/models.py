@@ -32,7 +32,8 @@ SOFTWARE.
 from taggit.managers import TaggableManager
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
-from django.core.urlresolvers import reverse
+#from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.models.signals import m2m_changed
 from django.db.models import Q, DO_NOTHING
 from django.db import models
@@ -120,8 +121,8 @@ class HeaderField(models.Model):
 class Header(models.Model):
     '''A header is a field and value associated with one or more images.
     '''
-    field = models.ForeignKey(HeaderField)
-    value = models.ForeignKey(HeaderValue)
+    field = models.ForeignKey(HeaderField,on_delete=models.CASCADE)
+    value = models.ForeignKey(HeaderValue,on_delete=models.CASCADE)
     add_date = models.DateTimeField('date added', auto_now_add=True)
 
     def __str__(self):
@@ -211,7 +212,7 @@ class Image(models.Model):
     image = models.FileField(upload_to=get_upload_folder,null=True,blank=False)
     add_date = models.DateTimeField('date added', auto_now_add=True)
     modify_date = models.DateTimeField('date modified', auto_now=True)
-    batch = models.ForeignKey(Batch,null=False,blank=False)
+    batch = models.ForeignKey(Batch,null=False,blank=False,on_delete=models.CASCADE)
     headers = models.ManyToManyField(Header)
 
     def __str__(self):
